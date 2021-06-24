@@ -7,7 +7,8 @@ BLACKLIST = []
 
 COGS_LIST = ['cogs.general',
              'cogs.quoteofday',
-             'cogs.netflix'
+             'cogs.netflix',
+             'cogs.gaming'
 ]
 
 #quoteofday config
