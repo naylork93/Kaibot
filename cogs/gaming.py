@@ -1,6 +1,9 @@
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
 import requests
+import config
+import asyncio
+import datetime
 
 def get_epicgames():
     #set the URL to the website we want to scrape
@@ -38,12 +41,29 @@ def get_epicgames():
 class Gaming(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.weeklyepic.start()
 
     @commands.command(name='getfreegames')
     async def getfreegames(self, ctx):
         """Gets the current free games on the epic games store"""
         games = get_epicgames()
         await ctx.send(games)
+
+    @tasks.loop(hours=168)
+    async def weeklyepic(self):
+      """Gets the weekly free games from the epic games store"""
+      games = get_epicgames()
+      channel = await self.bot.fetch_channel(config.EPICGAMES_CHANNEL)
+      await channel.send(games)
+
+    @weeklyepic.before_loop
+    async def before_weeklyepic(self):
+      for _ in range(60*60*24):
+        if int(datetime.datetime.now().strftime("%w")) == config.EPICGAMES_DAY \
+        and datetime.datetime.now().hour == 19:
+            print('Run the weekly epic')
+            return
+        await asyncio.sleep(3600)
 
 
 def setup(bot):
