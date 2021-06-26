@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands, tasks
 import json
 import requests
@@ -35,10 +34,11 @@ class QuoteCog(commands.Cog):
     @dailyinspire.before_loop
     async def before_daily(self):
       for _ in range(60*60*24):  # loop the whole day
-        if datetime.datetime.now().hour == 8:  # 24 hour format
+        if datetime.datetime.now().hour == config.INSPIRE_HOUR \
+        and datetime.datetime.now().minute == config.INSPIRE_MINUTE:  # 24 hour format
             print('It is time')
             return
-        await asyncio.sleep(3600)
+        await asyncio.sleep(60)
 
 def setup(bot):
     bot.add_cog(QuoteCog(bot))

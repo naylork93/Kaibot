@@ -11,5 +11,6 @@ COGS_LIST = ['cogs.general',
 ]
 
 #quoteofday config
-INSPIRE_TIME = '08:00'
+INSPIRE_HOUR = 8
+INSPIRE_MINUTE = 0
 INSPIRE_CHANNEL = '812055214618050620'
