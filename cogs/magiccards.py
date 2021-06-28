@@ -23,16 +23,34 @@ def add_card(amount, name, foil):
 def get_all_cards():
     conn = sqlite3.connect('magiccards.db')
     c = conn.cursor()
-    c.execute("SELECT * FROM magiccards")
-    return c.fetchall()
+    c.execute("SELECT name, amount, foil FROM magiccards ORDER BY name")
+    values = c.fetchall()
+    long_string = len(max(values, key=lambda t: len(t[0]))[0])
+    titles = ('Name', 'Amount', 'Foil')
+    table = [titles] + values
+    output = ''
+    for i, d in enumerate(table):
+        line = '|'.join(str(x).ljust(long_string + 4) for x in d)
+        output = output + '\n' + line
+    
+    return "```" + output + "```"
 
 def get_card(name):
     conn = sqlite3.connect('magiccards.db')
     c = conn.cursor()
-    c.execute("SELECT * FROM magiccards WHERE name LIKE :name",
+    c.execute("SELECT name, amount, foil FROM magiccards WHERE name LIKE :name",
         {'name': '%' + name + '%'}
         )
-    return c.fetchall()
+    values = c.fetchall()
+    long_string = len(max(values, key=lambda t: len(t[0]))[0])
+    titles = ('Name', 'Amount', 'Foil')
+    table = [titles] + values
+    output = ''
+    for i, d in enumerate(table):
+        line = '|'.join(str(x).ljust(long_string + 4) for x in d)
+        output = output + '\n' + line
+    
+    return "```" + output + "```"
 
 def update_amount(amount, name):
     conn = sqlite3.connect('magiccards.db')
