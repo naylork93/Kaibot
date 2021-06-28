@@ -8,7 +8,8 @@ BLACKLIST = []
 COGS_LIST = ['cogs.general',
              'cogs.quoteofday',
              'cogs.netflix',
-             'cogs.gaming'
+             'cogs.gaming',
+             'cogs.magiccards'
 ]
 
 INSPIRE_HOUR = 8
