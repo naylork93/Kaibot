@@ -60,7 +60,7 @@ class Gaming(commands.Cog):
     async def before_weeklyepic(self):
       for _ in range(60*60*24):
         if int(datetime.datetime.now().strftime("%w")) == config.EPICGAMES_DAY \
-        and datetime.datetime.now().hour == 19:
+        and datetime.datetime.now().hour == config.EPICGAMES_TIME:
             print('Run the weekly epic')
             return
         await asyncio.sleep(3600)
